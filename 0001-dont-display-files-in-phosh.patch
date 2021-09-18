@@ -1,0 +1,20 @@
+--- a/waydroid/src/waydroid/tools/services/user_manager.py	2021-09-18 18:50:25.320230647 +0200
++++ b/waydroid/tools/services/user_manager.py	2021-09-18 18:49:39.463562315 +0200
+@@ -26,6 +26,8 @@ def start(args, unlocked_cb=None):
+             lines.append("Name=" + appInfo["name"])
+             lines.append("Exec=waydroid app launch " + packageName)
+             lines.append("Icon=" + args.waydroid_data + "/icons/" + packageName + ".png")
++            if os.path.exists('/usr/bin/phosh'):
++                lines.append("NoDisplay=true")
+             desktop_file = open(desktop_file_path, "w")
+             for line in lines:
+                 desktop_file.write(line + "\n")
+@@ -44,6 +46,8 @@ def start(args, unlocked_cb=None):
+         if hide:
+             lines.append("NoDisplay=true")
+         lines.append("Icon=" + tools.config.tools_src + "/data/AppIcon.png")
++        if os.path.exists('/usr/bin/phosh'):
++            lines.append("X-Purism-FormFactor=Workstation;Mobile;")
+         desktop_file = open(desktop_file_path, "w")
+         for line in lines:
+             desktop_file.write(line + "\n")

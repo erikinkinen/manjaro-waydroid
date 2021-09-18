@@ -4,7 +4,7 @@
 
 pkgname=waydroid
 pkgver=r30.15bbf62
-pkgrel=2.0
+pkgrel=2.1
 pkgdesc="A container-based approach to boot a full Android system on a regular Linux system"
 arch=('any')
 url='https://github.com/waydroid'
@@ -14,11 +14,16 @@ makedepends=('git')
 optdepends=('waydroid-image: Android image for use with waydroid')
 _commit="15bbf62e43e8e2482aab809d24153fcbfc83a7bf"
 source=("waydroid::git+https://github.com/waydroid/waydroid.git#commit=$_commit"
-  gbinder.conf)
+  gbinder.conf 0001-dont-display-files-in-phosh.patch)
 
 pkgver() {
-  cd "$pkgname"
+  cd waydroid
   printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+  cd waydroid
+  patch -p2 -i ../0001-dont-display-files-in-phosh.patch
 }
 
 package() {
@@ -36,4 +41,5 @@ package() {
 }
 
 sha256sums=('SKIP'
-            '87a21d401281735ea026d715ea79b36e01f9af084198de2761b32d5b58a343dd')
+            '87a21d401281735ea026d715ea79b36e01f9af084198de2761b32d5b58a343dd'
+            'f71fd2ddc9048572330521b5e56ffcb9401979a904855a9ff34213f0a3e55f51')
