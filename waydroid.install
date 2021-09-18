@@ -1,4 +1,0 @@
-post_install() {
-    # Initialize waydroid
-    waydroid init
-}
