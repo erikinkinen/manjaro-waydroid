@@ -23,15 +23,13 @@ pkgver() {
 
 package() {
   cd waydroid
-  install -dm755 "$pkgdir/usr/lib/waydroid"
-  install -dm755 "$pkgdir/usr/share/applications"
-  install -dm755 "$pkgdir/usr/bin"
-  cp -r tools data "$pkgdir/usr/lib/waydroid/"
-  mv "$pkgdir/usr/lib/waydroid/data/Waydroid.desktop" "$pkgdir/usr/share/applications"
-  echo "X-Purism-FormFactor=Workstation;Mobile;" >> "$pkgdir/usr/share/applications/Waydroid.desktop"
-  cp waydroid.py "$pkgdir/usr/lib/waydroid/"
+  install -dm644 "$pkgdir/usr/bin"
+  install -Dm755 waydroid.py -t "$pkgdir/usr/lib/waydroid"
   ln -s /usr/lib/waydroid/waydroid.py "$pkgdir/usr/bin/waydroid"
-
+  install -Dm644 data/Waydroid.desktop -t "$pkgdir/usr/share/applications"
+  rm data/Waydroid.desktop
+  echo "X-Purism-FormFactor=Workstation;Mobile;" >> "$pkgdir/usr/share/applications/Waydroid.desktop"    
+  cp -r tools data "$pkgdir/usr/lib/waydroid/"
   install -Dm644 -t "$pkgdir/etc" "$srcdir/gbinder.conf"
   install -Dm644 -t "$pkgdir/etc/gbinder.d" gbinder/anbox.conf
   install -Dm644 -t "$pkgdir/usr/lib/systemd/system" debian/waydroid-container.service
