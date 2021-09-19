@@ -4,7 +4,7 @@
 
 pkgname=waydroid
 pkgver=r30.15bbf62
-pkgrel=2.10
+pkgrel=2.11
 pkgdesc="A container-based approach to boot a full Android system on a regular Linux system"
 arch=('any')
 url='https://github.com/waydroid'
