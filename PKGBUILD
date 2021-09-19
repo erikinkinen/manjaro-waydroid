@@ -35,13 +35,15 @@ package() {
   install -Dm755 ../setup-waydroid.py "$pkgdir/usr/bin/setup-waydroid"
   install -Dm755 waydroid.py -t "$pkgdir/usr/lib/waydroid"
   ln -s /usr/lib/waydroid/waydroid.py "$pkgdir/usr/bin/waydroid"
-  cp -r tools data "$pkgdir/usr/lib/waydroid/"
   install -Dm644 data/Waydroid.desktop -t "$pkgdir/usr/share/applications"
+  echo "X-Purism-FormFactor=Workstation;Mobile;" >> \
+      "$pkgdir/usr/share/applications/Waydroid.desktop"   
   rm data/Waydroid.desktop
-  echo "X-Purism-FormFactor=Workstation;Mobile;" >> "$pkgdir/usr/share/applications/Waydroid.desktop"  
+  cp -r tools data "$pkgdir/usr/lib/waydroid/" 
   install -Dm644 -t "$pkgdir/etc" "$srcdir/gbinder.conf"
   install -Dm644 -t "$pkgdir/etc/gbinder.d" gbinder/anbox.conf
-  install -Dm644 -t "$pkgdir/usr/lib/systemd/system" debian/waydroid-container.service
+  install -Dm644 -t "$pkgdir/usr/lib/systemd/system" \
+      debian/waydroid-container.service
   install -Dm644 ../id.waydro.setup-waydroid.policy -t \
       "${pkgdir}"/usr/share/polkit-1/actions
 }
