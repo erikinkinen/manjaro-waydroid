@@ -4,7 +4,7 @@
 
 pkgname=waydroid
 pkgver=r30.15bbf62
-pkgrel=2.11
+pkgrel=2.12
 pkgdesc="A container-based approach to boot a full Android system on a regular Linux system"
 arch=('any')
 url='https://github.com/waydroid'
@@ -36,7 +36,9 @@ package() {
   install -Dm755 waydroid.py -t "$pkgdir/usr/lib/waydroid"
   ln -s /usr/lib/waydroid/waydroid.py "$pkgdir/usr/bin/waydroid"
   cp -r tools data "$pkgdir/usr/lib/waydroid/"
-  rm "$pkgdir/usr/lib/waydroid/data/Waydroid.desktop"
+  install -Dm644 data/Waydroid.desktop -t "$pkgdir/usr/share/applications"
+  rm data/Waydroid.desktop
+  echo "X-Purism-FormFactor=Workstation;Mobile;" >> "$pkgdir/usr/share/applications/Waydroid.desktop"  
   install -Dm644 -t "$pkgdir/etc" "$srcdir/gbinder.conf"
   install -Dm644 -t "$pkgdir/etc/gbinder.d" gbinder/anbox.conf
   install -Dm644 -t "$pkgdir/usr/lib/systemd/system" debian/waydroid-container.service
