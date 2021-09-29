@@ -3,18 +3,20 @@
 # Contributor: Bart Ribbers <bribbers@disroot.org>
 
 pkgname=waydroid
-pkgver=r38.e990576
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="A container-based approach to boot a full Android system on a regular Linux system"
 arch=('any')
 url='https://github.com/waydroid'
 license=('GPL')
-depends=('lxc' 'python' 'python-gbinder' 'python-gobject')
+depends=('lxc' 'python' 'python-gbinder' 'python-gobject' 'nftables' 'dnsmasq')
 makedepends=('git')
-optdepends=('waydroid-image: Android image for use with waydroid')
+optdepends=('waydroid-image: Android image for use with waydroid'
+  'python-pyclip: share clipboard with container')
 install=waydroid.install
-_commit="e990576ec954ab53cdac5e534f5897d5f3ed0996"
+_commit="58504aa086ef84daae11e4a8a25f05f5f562695a" # tags/1.1.0
 source=("waydroid::git+https://github.com/waydroid/waydroid.git#commit=$_commit"
+         https://github.com/waydroid/waydroid/commit/9cec7cac9481750a4955c5bbc6c68a218d4635db.patch
          gbinder.conf
          0001-dont-display-files-in-phosh.patch
          id.waydro.setup-waydroid.policy
@@ -22,11 +24,12 @@ source=("waydroid::git+https://github.com/waydroid/waydroid.git#commit=$_commit"
 
 pkgver() {
   cd waydroid
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  git describe --tags | sed 's/^v//;s/-/+/g'
 }
 
 prepare() {
   cd waydroid
+  patch -p1 < ../9cec7cac9481750a4955c5bbc6c68a218d4635db.patch
   patch -p2 -i ../0001-dont-display-files-in-phosh.patch
 }
 
@@ -49,6 +52,7 @@ package() {
 }
 
 sha256sums=('SKIP'
+            '8ee208705b92c85b945705105317d6ce3ab1a4224024c93406192edd7ec94762'
             '87a21d401281735ea026d715ea79b36e01f9af084198de2761b32d5b58a343dd'
             'f71fd2ddc9048572330521b5e56ffcb9401979a904855a9ff34213f0a3e55f51'
             '16a155c099f012048e913bffd999b58d470aa74f2a3e30854204e6b0a5de4738'
