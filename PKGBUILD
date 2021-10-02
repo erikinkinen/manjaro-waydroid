@@ -3,7 +3,7 @@
 # Contributor: Bart Ribbers <bribbers@disroot.org>
 
 pkgname=waydroid
-pkgver=1.1.0+3+g890950f
+pkgver=1.1.1+5+g736e9c9
 pkgrel=1
 pkgdesc="A container-based approach to boot a full Android system on a regular Linux system"
 arch=('any')
@@ -14,7 +14,7 @@ makedepends=('git')
 optdepends=('waydroid-image: Android image for use with waydroid'
   'python-pyclip: share clipboard with container')
 install=waydroid.install
-_commit="890950f7e8d296f4adc4881560b8122232b24b8c" # tags/1.1.0
+_commit="736e9c9696cb9792389f63db10c6396169dca6db" # tags/1.1.0
 source=("waydroid::git+https://github.com/waydroid/waydroid.git#commit=$_commit"
          gbinder.conf
          0001-dont-display-files-in-phosh.patch
